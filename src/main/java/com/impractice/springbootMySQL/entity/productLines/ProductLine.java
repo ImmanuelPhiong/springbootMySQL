@@ -1,7 +1,7 @@
 package com.impractice.springbootMySQL.entity.productLines;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.impractice.springbootMySQL.entity.employees.Employee;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.impractice.springbootMySQL.entity.products.Product;
 import lombok.*;
 
@@ -15,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false, exclude={"products"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class ProductLine {
     @Id
     @Column(name = "productLine")
@@ -27,7 +28,7 @@ public class ProductLine {
     @Column(name = "image")
     private byte[] image;
 
-    //foreign
+    //Bidirectional relationship
     @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "productLine")
     @JsonIgnore
     private List<Product> products;

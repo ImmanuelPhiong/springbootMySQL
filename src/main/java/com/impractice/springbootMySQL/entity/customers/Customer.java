@@ -1,10 +1,15 @@
 package com.impractice.springbootMySQL.entity.customers;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.impractice.springbootMySQL.entity.employees.Employee;
+import com.impractice.springbootMySQL.entity.orders.Order;
+import com.impractice.springbootMySQL.entity.payments.Payment;
 import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name="customers")
@@ -12,7 +17,8 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = false, exclude={"orders", "payments"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Customer {
     @Id
     @Column(name = "customerNumber")
@@ -38,10 +44,19 @@ public class Customer {
     @Column(name = "country")
     private String country;
 
-    @ManyToOne(optional=true, targetEntity = Employee.class)
+    @ManyToOne(fetch = FetchType.LAZY, optional=true, targetEntity = Employee.class)
     @JoinColumn(name = "salesRepEmployeeNumber", referencedColumnName = "employeeNumber", nullable = true)
     private Employee salesRepEmployeeNumber;
 
     @Column(name = "creditLimit")
     private BigDecimal creditLimit;
+
+    //Bidirectional relationship
+    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "customerNumber")
+    @JsonIgnore
+    private List<Order> orders;
+
+    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "customerNumber")
+    @JsonIgnore
+    private List<Payment> payments;
 }

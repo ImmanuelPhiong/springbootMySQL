@@ -1,6 +1,5 @@
 package com.impractice.springbootMySQL.entity.offices;
 
-import com.impractice.springbootMySQL.entity.employees.Employee;
 import com.impractice.springbootMySQL.entity.offices.exception.OfficeNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;

@@ -14,9 +14,9 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 @Service
 public class CustomerServiceImpl implements CustomerService{
     @Autowired
-    private  CustomerRepository customerRepository;
+    private CustomerRepository customerRepository;
     @Autowired
-    private  CustomerModelAssembler customerModelAssembler;
+    private CustomerModelAssembler customerModelAssembler;
 
 
     @Override

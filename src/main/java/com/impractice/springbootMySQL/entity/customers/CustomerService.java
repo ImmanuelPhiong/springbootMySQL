@@ -4,7 +4,6 @@ package com.impractice.springbootMySQL.entity.customers;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 
-import java.util.List;
 
 public interface CustomerService {
     public String createCustomer(Customer customer);

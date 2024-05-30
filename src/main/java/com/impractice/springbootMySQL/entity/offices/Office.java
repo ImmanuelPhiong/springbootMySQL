@@ -1,6 +1,7 @@
 package com.impractice.springbootMySQL.entity.offices;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -13,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false, exclude = "offices")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Office {
     @Id
     @Column(name = "officeCode")
@@ -34,7 +36,7 @@ public class Office {
     @Column(name = "territory")
     private String territory;
 
-    // for the foreign key
+    //Bidirectional relationship
     @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "officeCode")
     @JsonIgnore
     private List<Office> offices;

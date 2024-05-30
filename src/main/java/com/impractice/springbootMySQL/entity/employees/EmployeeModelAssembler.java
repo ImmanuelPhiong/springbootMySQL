@@ -1,6 +1,6 @@
 package com.impractice.springbootMySQL.entity.employees;
 
-import com.impractice.springbootMySQL.entity.customers.CustomerController;
+import com.impractice.springbootMySQL.entity.offices.OfficeController;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
@@ -13,9 +13,17 @@ public class EmployeeModelAssembler implements RepresentationModelAssembler<Empl
 
     @Override
     public EntityModel<Employee> toModel(Employee employee) {
-        return EntityModel.of(employee,
+        if (employee.getOfficeCode() == null) {
+            return EntityModel.of(employee,
+                    linkTo(methodOn(EmployeeController.class).getEmployee(employee.getEmployeeNumber())).withSelfRel(),
+                    linkTo(methodOn(EmployeeController.class).getAllEmployee()).withRel("employee"));
+
+        }else{return EntityModel.of(employee,
                 linkTo(methodOn(EmployeeController.class).getEmployee(employee.getEmployeeNumber())).withSelfRel(),
-                linkTo(methodOn(EmployeeController.class).getAllEmployee()).withRel("employee"));
+                linkTo(methodOn(EmployeeController.class).getAllEmployee()).withRel("employee"),
+                linkTo(methodOn(OfficeController.class).getOffice(employee.getOfficeCode().getOfficeCode())).withRel("office"));
+
+        }
 
     }
 }

@@ -1,8 +1,5 @@
 package com.impractice.springbootMySQL.entity.employees;
 
-import com.impractice.springbootMySQL.entity.customers.Customer;
-import com.impractice.springbootMySQL.entity.customers.CustomerController;
-import com.impractice.springbootMySQL.entity.customers.exception.CustomerNotFoundException;
 import com.impractice.springbootMySQL.entity.employees.exception.EmployeeNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;

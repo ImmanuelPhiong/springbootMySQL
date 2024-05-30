@@ -1,11 +1,14 @@
 package com.impractice.springbootMySQL.entity.products;
 
-import com.impractice.springbootMySQL.entity.employees.Employee;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.impractice.springbootMySQL.entity.orderDetails.OrderDetail;
 import com.impractice.springbootMySQL.entity.productLines.ProductLine;
 import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name="products")
@@ -13,7 +16,8 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = false, exclude={"orderDetailList"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Product {
     @Id
     @Column(name = "productCode")
@@ -38,4 +42,9 @@ public class Product {
     private BigDecimal buyPrice;
     @Column(name = "MSRP")
     private BigDecimal MSRP;
+
+    //Bidirectional relationship
+    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "productCode")
+    @JsonIgnore
+    private List<OrderDetail> orderDetailList;
 }

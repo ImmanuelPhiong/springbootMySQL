@@ -16,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false, exclude={"employees", "customers", "orders"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Employee {
     @Id
     @Column(name = "employeeNumber")
@@ -29,18 +30,18 @@ public class Employee {
     @Column(name = "email")
     private String email;
 
-    @ManyToOne(optional = true, targetEntity = Office.class)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true, targetEntity = Office.class)
     @JoinColumn(name = "officeCode", referencedColumnName = "officeCode",nullable = true)
     private Office officeCode;
 
-    @ManyToOne(optional=true, targetEntity = Employee.class)
+    @ManyToOne(fetch = FetchType.LAZY, optional=true, targetEntity = Employee.class)
     @JoinColumn(name = "reportsTo", referencedColumnName = "employeeNumber", nullable = true)
     private Employee reportsTo;
 
     @Column(name = "jobTitle")
     private String jobTitle;
 
-    // for the foreign key
+    //Bidirectional relationship
     @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "salesRepEmployeeNumber")
     @JsonIgnore
     private List<Customer> customers;

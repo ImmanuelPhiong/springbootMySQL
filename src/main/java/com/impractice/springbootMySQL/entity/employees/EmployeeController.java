@@ -1,12 +1,10 @@
 package com.impractice.springbootMySQL.entity.employees;
 
-import com.impractice.springbootMySQL.entity.customers.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/employee")
